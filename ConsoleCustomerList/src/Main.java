@@ -1,3 +1,5 @@
+import Exceptions.*;
+
 import java.util.Scanner;
 
 public class Main
@@ -13,12 +15,6 @@ public class Main
 
     public static void main(String[] args)
     {
-        class InvalidFormatException extends RuntimeException{
-            InvalidFormatException(String message){
-                super(message);
-            }
-        }
-
         Scanner scanner = new Scanner(System.in);
         CustomerStorage executor = new CustomerStorage();
         for(;;)
@@ -27,12 +23,12 @@ public class Main
                 String command = scanner.nextLine();
                 String[] tokens = command.split("\\s+", 2);
                 if (tokens[0].equals("add")) {
-                    if (tokens.length == 1){throw new InvalidFormatException("Wrong format. Correct format: add Василий Петров vasily.petrov@gmail.com +79215637722");}
+                    if (tokens.length == 1){throw new InvalidStringFormatException("Wrong format. Correct format: add Василий Петров vasily.petrov@gmail.com +79215637722");}
                     executor.addCustomer(tokens[1]);
                 } else if (tokens[0].equals("list")) {
                     executor.listCustomers();
                 } else if (tokens[0].equals("remove")) {
-                    if (tokens.length == 1){throw new InvalidFormatException("Wrong format. Correct format: remove Василий Петров");}
+                    if (tokens.length == 1){throw new InvalidStringFormatException("Wrong format. Correct format: remove Василий Петров");}
                     executor.removeCustomer(tokens[1]);
                 } else if (tokens[0].equals("count")) {
                     System.out.println("There are " + executor.getCount() + " customers");

@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import Exceptions.*;
 
 public class CustomerStorage
 {
@@ -7,17 +8,6 @@ public class CustomerStorage
 
     private HashMap<String, Customer> storage;
 
-    private class InvalidEmailException extends RuntimeException{
-        InvalidEmailException(String message){
-            super(message);
-        }
-    }
-
-    private class InvalidNumberException extends RuntimeException{
-        InvalidNumberException(String message){
-            super(message);
-        }
-    }
 
     private class InvalidFormatException extends RuntimeException{
         InvalidFormatException(String message){
@@ -35,14 +25,14 @@ public class CustomerStorage
     {
         String[] components = data.split("\\s+");
         if (components.length != 4){
-            throw new InvalidFormatException("Wrong format. Correct format: add Василий Петров vasily.petrov@gmail.com +79215637722");
+            throw new InvalidStringFormatException("Wrong format. Correct format: add Василий Петров vasily.petrov@gmail.com +79215637722");
         }
         String name = components[0] + " " + components[1];
         if (!components[2].matches(EMAIL_FORMAT)){
             throw new InvalidEmailException("Wrong e-mail format. Correct format: abc111@def222.com");
         }
         if (!components[3].matches(NUMBER_FORMAT)){
-            throw new InvalidNumberException("Wrong phone number format. Correct format: +123456789");
+            throw new InvalidPhoneNumberException("Wrong phone number format. Correct format: +123456789");
         }
         storage.put(name, new Customer(name, components[3], components[2]));
     }
